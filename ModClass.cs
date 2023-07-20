@@ -19,7 +19,7 @@ namespace NoBlur
     public class NoBlur : Mod, IMenuMod, IGlobalSettings<GlobalSettingsClass>
     {
         new public string GetName() => "No Blur";
-        public override string GetVersion() => "3";
+        public override string GetVersion() => "1";
 
         public bool ToggleButtonInsideMenu => false;
 
