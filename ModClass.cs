@@ -1,4 +1,4 @@
-﻿using Modding;
+using Modding;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -19,7 +19,7 @@ namespace NoBlur
     public class NoBlur : Mod, IMenuMod, IGlobalSettings<GlobalSettingsClass>
     {
         new public string GetName() => "No Blur";
-        public override string GetVersion() => "1";
+        public override string GetVersion() => "1.1";
 
         public bool ToggleButtonInsideMenu => false;
 
@@ -63,15 +63,12 @@ namespace NoBlur
                 for (int i = 0; i < allGameObjects.Length; i++)
                 {
                     GameObject gameObject = allGameObjects[i];
-                    if (gameObject.transform.parent == null)
+                    //If the lowercas-ified name of gameObject contains 'blurplane' and isn't "no blur"
+                    if (gameObject.name.ToLower().Contains("blurplane") && gameObject.name.ToLower() != "no blur")
                     {
-                        //If the lowercas-ified name of gameObject contains 'blurplane' and isn't "no blur"
-                        if (gameObject.name.ToLower().Contains("blurplane") && gameObject.name.ToLower() != "no blur")
-                        {
-                            //Disable
-                            disabledBlurs.Add(gameObject);
-                            gameObject.SetActive(false);
-                        }
+                        //Disable
+                        disabledBlurs.Add(gameObject);
+                        gameObject.SetActive(false);
                     }
                 }
             }
@@ -85,11 +82,6 @@ namespace NoBlur
                     for (int b = 0; b < disabledBlurs.Count; b++) 
                     {
                         disabledBlurs[b].SetActive(true);
-                    }
-                    if (disabledBlurs.Count == 0)
-                    {
-                        //This shouldnt happen
-                        Debug.LogError("Disabled Blurs is empty");
                     }
                 }
             }
@@ -124,11 +116,6 @@ namespace NoBlur
                     {
                         disabledFogs[f].SetActive(true);
                     }
-                    if (disabledFogs.Count == 0)
-                    {
-                        //This shouldnt happen
-                        Debug.LogError("Disabled Fogs is empty");
-                    }
                 }
                 
             }
@@ -162,11 +149,6 @@ namespace NoBlur
                     for (int h = 0; h < disabledHazes.Count; h++)
                     {
                         disabledHazes[h].SetActive(true);
-                    }
-                    if (disabledHazes.Count == 0)
-                    {
-                        //This shouldnt happen
-                        Debug.LogError("Disabled Hazes is empty");
                     }
                 }
             }
@@ -251,7 +233,7 @@ namespace NoBlur
                         false => 0,
                         true => 1,
                     }
-                }
+                },
             };
         }
     }
