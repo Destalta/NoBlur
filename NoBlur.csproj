@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <!-- Change this to the path of your modded HK installation -->
     <HollowKnightRefs>D:\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed</HollowKnightRefs>
@@ -15,8 +15,8 @@
     <Product>NoBlur</Product>
     <Description>Disable blur and other effects in mod settings</Description>
     <Copyright>Copyright ©  2023</Copyright>
-    <AssemblyVersion>1.0.0.0</AssemblyVersion>
-    <FileVersion>1.0.0.0</FileVersion>
+    <AssemblyVersion>1.1.0.0</AssemblyVersion>
+    <FileVersion>1.1.0.0</FileVersion>
     <OutputPath>bin\$(Configuration)\</OutputPath>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
@@ -326,5 +326,9 @@
   <ItemGroup>
     <None Include=".gitignore" />
     <None Include="ReadMe.md" />
+    <None Include="Resources\.gitignore" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Exports\" />
   </ItemGroup>
 </Project>
