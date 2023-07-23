@@ -14,6 +14,9 @@ namespace NoBlur
         public bool noBlur = true;
         public bool noFog = false;
         public bool noHaze = false;
+        public bool blurHotkey = false;
+        public bool fogHotkey = false;
+        public bool hazeHotkey = false;
     }
 
     public class NoBlur : Mod, IMenuMod, IGlobalSettings<GlobalSettingsClass>
@@ -40,6 +43,35 @@ namespace NoBlur
         public override void Initialize()
         {
             UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
+            ModHooks.HeroUpdateHook += OnHeroUpdate;
+        }
+
+        private void OnHeroUpdate()
+        {
+            if (GS.blurHotkey)
+            {
+                if (Input.GetKeyDown(KeyCode.B))
+                {
+                    GS.noBlur = !GS.noBlur;
+                    UpdateNoBlur();
+                }
+            }
+            if (GS.fogHotkey)
+            {
+                if (Input.GetKeyDown(KeyCode.Y))
+                {
+                    GS.noFog = !GS.noFog;
+                    UpdateNoFog();
+                }
+            }
+            if (GS.hazeHotkey)
+            {
+                if (Input.GetKeyDown(KeyCode.H))
+                {
+                    GS.noHaze = !GS.noHaze;
+                    UpdateNoHaze();
+                }
+            }
         }
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -229,6 +261,78 @@ namespace NoBlur
                         UpdateNoHaze();
                     },
                     Loader = () => GS.noHaze switch
+                    {
+                        false => 0,
+                        true => 1,
+                    }
+                },
+                new IMenuMod.MenuEntry
+                {
+                    Name = "Blur Hotkey",
+                    Description = "Press B to toggle blur",
+                    Values = new string[]
+                    {
+                        "Off",
+                        "On"
+                    },
+                    Saver = opt =>
+                    {
+                        GS.blurHotkey = opt switch
+                        {
+                            0 => false,
+                            1 => true,
+                            _ => throw new System.NotImplementedException(),
+                        };
+                    },
+                    Loader = () => GS.blurHotkey switch
+                    {
+                        false => 0,
+                        true => 1,
+                    }
+                },
+                new IMenuMod.MenuEntry
+                {
+                    Name = "Fog Hotkey",
+                    Description = "Press Y to toggle fog",
+                    Values = new string[]
+                    {
+                        "Off",
+                        "On"
+                    },
+                    Saver = opt =>
+                    {
+                        GS.fogHotkey = opt switch
+                        {
+                            0 => false,
+                            1 => true,
+                            _ => throw new System.NotImplementedException(),
+                        };
+                    },
+                    Loader = () => GS.fogHotkey switch
+                    {
+                        false => 0,
+                        true => 1,
+                    }
+                },
+                new IMenuMod.MenuEntry
+                {
+                    Name = "Haze Hotkey",
+                    Description = "Press H to toggle haze",
+                    Values = new string[]
+                    {
+                        "Off",
+                        "On"
+                    },
+                    Saver = opt =>
+                    {
+                        GS.hazeHotkey = opt switch
+                        {
+                            0 => false,
+                            1 => true,
+                            _ => throw new System.NotImplementedException(),
+                        };
+                    },
+                    Loader = () => GS.hazeHotkey switch
                     {
                         false => 0,
                         true => 1,
